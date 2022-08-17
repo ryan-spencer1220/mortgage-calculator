@@ -11,10 +11,20 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("It worked");
     const principle = purchasePrice - downPayment;
-    const numerator = interestRate * Math.pow(1 + interestRate, repaymentTime);
-    console.log(numerator);
+    const adjustedInterest = interestRate * 0.01;
+    const numerator =
+      adjustedInterest * Math.pow(1 + adjustedInterest, repaymentTime * 12);
+    const denominator = Math.pow(1 + adjustedInterest, repaymentTime * 12) - 1;
+    const mortgageAmount = parseFloat(
+      principle * (numerator / denominator)
+    ).toFixed(0);
+    setMortgage(mortgageAmount);
+    const loanAmount = parseFloat(mortgageAmount * repaymentTime * 12).toFixed(
+      0
+    );
+    setLoan(loanAmount);
+    console.log(loan);
   };
 
   return (
@@ -87,8 +97,8 @@ function App() {
                     <input
                       type="range"
                       min="0"
-                      max="10"
-                      step="1"
+                      max="6"
+                      step=".1"
                       value={interestRate}
                       className="range range-primary"
                       onChange={(e) => setInterestRate(e.target.value)}
@@ -99,16 +109,16 @@ function App() {
                   </button>
                 </div>
                 <div className="basis-1/2 space-y-4">
-                  <div class="stats shadow">
-                    <div class="stat">
-                      <div class="stat-title">Loan Amount</div>
-                      <div class="stat-value">${loan}</div>
+                  <div className="stats shadow">
+                    <div className="stat">
+                      <div className="stat-title">Monthly Mortgage Payment</div>
+                      <div className="stat-value">${mortgage}</div>
                     </div>
                   </div>
-                  <div class="stats shadow">
-                    <div class="stat">
-                      <div class="stat-title">Mortgage Payment</div>
-                      <div class="stat-value">${mortgage}</div>
+                  <div className="stats shadow">
+                    <div className="stat">
+                      <div className="stat-title">Loan Amount</div>
+                      <div className="stat-value">${loan}</div>
                     </div>
                   </div>
                 </div>
