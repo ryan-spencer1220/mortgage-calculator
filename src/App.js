@@ -16,13 +16,14 @@ function App() {
     const numerator =
       adjustedInterest * Math.pow(1 + adjustedInterest, repaymentTime * 12);
     const denominator = Math.pow(1 + adjustedInterest, repaymentTime * 12) - 1;
-    const mortgageAmount = parseFloat(
-      principle * (numerator / denominator)
-    ).toFixed(0);
+    const mortgageAmount = parseFloat(principle * (numerator / denominator))
+      .toFixed(0)
+      .toString();
     setMortgage(mortgageAmount);
-    const loanAmount = parseFloat(mortgageAmount * repaymentTime * 12).toFixed(
-      0
-    );
+    const loanAmount = parseFloat(mortgageAmount * repaymentTime * 12)
+      .toFixed(0)
+      .toString();
+    console.log(loanAmount);
     setLoan(loanAmount);
     console.log(loan);
   };
@@ -112,13 +113,20 @@ function App() {
                   <div className="stats shadow">
                     <div className="stat">
                       <div className="stat-title">Monthly Mortgage Payment</div>
-                      <div className="stat-value">${mortgage}</div>
+                      <div className="stat-value">
+                        $
+                        {mortgage
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </div>
                     </div>
                   </div>
                   <div className="stats shadow">
                     <div className="stat">
                       <div className="stat-title">Loan Amount</div>
-                      <div className="stat-value">${loan}</div>
+                      <div className="stat-value">
+                        ${loan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </div>
                     </div>
                   </div>
                 </div>
